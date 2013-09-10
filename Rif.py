@@ -53,10 +53,10 @@ def findKey(wname):
     global NetId
     NetId=findId(netkey,r"\Connection",r"Name",wname)#注册表更改IP，需要此值，看来不得不开启global了。
     if NetId:
-        print "find out !"+wname+"\nNetCfgInstanceId="+NetId
+        print "find out ! %s \nNetCfgInstanceId= %s" %(wname,NetId)
         ClassId=findId(deskey,'',r"NetCfgInstanceId",NetId)#2.遍历查询Key=NetCfgInstanceId 值483D7F95-D738-49CE-A283-8858B1C2AC6D
         if ClassId:
-            print "find out !"+ClassId
+            print "find out ! %s" % ClassId
             return ClassId
         else:
             return 0#Classid错误
