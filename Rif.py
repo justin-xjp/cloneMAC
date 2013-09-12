@@ -1,26 +1,28 @@
-# -*- coding: cp936 -*-
+# -*- coding: utf-8 -*-
 
-##ÉÏÃæÕâĞĞºÜ¹Ø¼ü£¬~!!!!!
-#³õÊ¼»¯
+
+##ä¸Šé¢è¿™è¡Œå¾ˆå…³é”®ï¼Œ~!!!!!
+#åˆå§‹åŒ–
 import _winreg
 import os
 import sys
 from ctypes import *
+#from codecs import *
 deskey=r"SYSTEM\CurrentControlSet\Control\class\{4D36E972-E325-11CE-BFC1-08002BE10318}"
 netkey=r"system\currentcontrolset\control\network\{4D36E972-E325-11CE-BFC1-08002BE10318}"
-nes=u"±¾µØÁ¬½Ó"
-###³£Êı
+nes=u"æœ¬åœ°è¿æ¥"
+###å¸¸æ•°
 def diffkey(key,subkey,addkey,sName,svalue):
-    try:#×ÓÄ¿Â¼²»´æÔÚÇé¿ö
+    try:#å­ç›®å½•ä¸å­˜åœ¨æƒ…å†µ
         skey=_winreg.OpenKey(key,subkey+addkey)
    # print "here"
     except WindowsError:
         return 0
-    try:#¿¼ÂÇsName²»´æÔÚÇé¿ö¡£¡£
+    try:#è€ƒè™‘sNameä¸å­˜åœ¨æƒ…å†µã€‚ã€‚
         qv=_winreg.QueryValueEx(skey,sName)[0]
 #        print qv
  #       print svalue
-        if qv==svalue:  #ÖĞÎÄ×Ö·û´®¶Ô±È£¬ºÜÂé·³£¬Ó¢ÎÄ¿ÉÒÔÓÃcmp£¬ÖĞÎÄÒª¿¼ÂÇ×ª»»±àÂë¡£³¢ÊÔÔÚÌá½»svalue±äÁ¿µÄÊ±ºò¶¨Òå³ÉÁËUNICODE±àÂë£¬ÆäËûÏµÍ³Î´²âÊÔ¡£
+        if qv==svalue:  #ä¸­æ–‡å­—ç¬¦ä¸²å¯¹æ¯”ï¼Œå¾ˆéº»çƒ¦ï¼Œè‹±æ–‡å¯ä»¥ç”¨cmpï¼Œä¸­æ–‡è¦è€ƒè™‘è½¬æ¢ç¼–ç ã€‚å°è¯•åœ¨æäº¤svalueå˜é‡çš„æ—¶å€™å®šä¹‰æˆäº†UNICODEç¼–ç ï¼Œå…¶ä»–ç³»ç»Ÿæœªæµ‹è¯•ã€‚
             _winreg.CloseKey(skey)
             return 1
         else:
@@ -29,9 +31,9 @@ def diffkey(key,subkey,addkey,sName,svalue):
     except WindowsError:
         _winreg.CloseKey(skey)
         return 0
-    #Á÷³Ì1.²éÑ¯'±¾µØÁ¬½Ó'¶ÔÓ¦ÉÏ¼¶Ä¿Â¼Ãû³Æ
-    #ÁíÍâ£¬±éÀú4D36E972-E325-11CE-BFC1-08002BE10318ÏÂndi\interface\lowerrange=ethernetÒ²ÊÇ¸öºÃ·½·¨~£¡£¡
-def findId(subkey,addkey,des,wname): #²éÕÒËùĞèKEY£¬µØÖ·£¬×ÓµØÖ·£¨Ëä¿É¾«¼ò£¬µ«Ğ§ÂÊ£©,ÃèÊö£¬Ğ£¶ÔÄÚÈİ¡£
+    #æµç¨‹1.æŸ¥è¯¢'æœ¬åœ°è¿æ¥'å¯¹åº”ä¸Šçº§ç›®å½•åç§°
+    #å¦å¤–ï¼Œéå†4D36E972-E325-11CE-BFC1-08002BE10318ä¸‹ndi\interface\lowerrange=ethernetä¹Ÿæ˜¯ä¸ªå¥½æ–¹æ³•~ï¼ï¼
+def findId(subkey,addkey,des,wname): #æŸ¥æ‰¾æ‰€éœ€KEYï¼Œåœ°å€ï¼Œå­åœ°å€ï¼ˆè™½å¯ç²¾ç®€ï¼Œä½†æ•ˆç‡ï¼‰,æè¿°ï¼Œæ ¡å¯¹å†…å®¹ã€‚
     key=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,subkey)
     try:
         i=1
@@ -51,21 +53,21 @@ def findId(subkey,addkey,des,wname): #²éÕÒËùĞèKEY£¬µØÖ·£¬×ÓµØÖ·£¨Ëä¿É¾«¼ò£¬µ«Ğ§Â
 def findKey(wname):
    
     global NetId
-    NetId=findId(netkey,r"\Connection",r"Name",wname)#×¢²á±í¸ü¸ÄIP£¬ĞèÒª´ËÖµ£¬¿´À´²»µÃ²»¿ªÆôglobalÁË¡£
+    NetId=findId(netkey,r"\Connection",r"Name",wname)#æ³¨å†Œè¡¨æ›´æ”¹IPï¼Œéœ€è¦æ­¤å€¼ï¼Œçœ‹æ¥ä¸å¾—ä¸å¼€å¯globaläº†ã€‚
     if NetId:
         print "find out ! %s \nNetCfgInstanceId= %s" %(wname,NetId)
-        ClassId=findId(deskey,'',r"NetCfgInstanceId",NetId)#2.±éÀú²éÑ¯Key=NetCfgInstanceId Öµ483D7F95-D738-49CE-A283-8858B1C2AC6D
+        ClassId=findId(deskey,'',r"NetCfgInstanceId",NetId)#2.éå†æŸ¥è¯¢Key=NetCfgInstanceId å€¼483D7F95-D738-49CE-A283-8858B1C2AC6D
         if ClassId:
             print "find out ! %s" % ClassId
             return ClassId
         else:
-            return 0#Classid´íÎó
+            return 0#Classidé”™è¯¯
     else:
-        return -1#Netid´íÎó
+        return -1#Netidé”™è¯¯
 def changeIP(subkey,ipAddress,subnetMask,gateway,dnsServer):
     strKeyName = 'System\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\' + subkey
     hkey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,strKeyName,0,_winreg.KEY_WRITE)
-     # ¶¨ÒåĞèÒªĞŞ¸ÄµÄIPµØÖ·¡¢×ÓÍøÑÚÂë¡¢Ä¬ÈÏÍø¹ØºÍDNSµÈ
+     # å®šä¹‰éœ€è¦ä¿®æ”¹çš„IPåœ°å€ã€å­ç½‘æ©ç ã€é»˜è®¤ç½‘å…³å’ŒDNSç­‰
      
     try:
         _winreg.SetValueEx(hkey, 'IPAddress', None, _winreg.REG_MULTI_SZ, ipAddress)
@@ -77,21 +79,21 @@ def changeIP(subkey,ipAddress,subnetMask,gateway,dnsServer):
         exit()
 
     _winreg.CloseKey(hkey)
-########¸üĞÂÍøÂçÊÊÅäÆ÷,dll
-# µ÷ÓÃDhcpNotifyConfigChangeº¯ÊıÍ¨ÖªIP±»ĞŞ¸Ä
+########æ›´æ–°ç½‘ç»œé€‚é…å™¨,dll
+# è°ƒç”¨DhcpNotifyConfigChangeå‡½æ•°é€šçŸ¥IPè¢«ä¿®æ”¹
 def reDhcp():
     
     DhcpNotifyConfigChange = windll.dhcpcsvc.DhcpNotifyConfigChange
 
     inet_addr = windll.Ws2_32.inet_addr
-# DhcpNotifyConfigChange º¯Êı²ÎÊıÁĞ±í£º
-# LPWSTR lpwszServerName,  ±¾µØ»úÆ÷ÎªNone
-# LPWSTR lpwszAdapterName, ÍøÂçÊÊÅäÆ÷Ãû³Æ
-# BOOL bNewIpAddress,      True±íÊ¾ĞŞ¸ÄIP
-# DWORD dwIpIndex,         ±íÊ¾ĞŞ¸ÄµÚ¼¸¸öIP, ´Ó0¿ªÊ¼
-# DWORD dwIpAddress,       ĞŞ¸ÄºóµÄIPµØÖ·
-# DWORD dwSubNetMask,      ĞŞ¸ÄºóµÄ×ÓÂëÑÚÂë
-# int nDhcpAction          ¶ÔDHCPµÄ²Ù×÷, 0 - ²»ĞŞ¸Ä, 1 - ÆôÓÃ, 2 - ½ûÓÃ
+# DhcpNotifyConfigChange å‡½æ•°å‚æ•°åˆ—è¡¨ï¼š
+# LPWSTR lpwszServerName,  æœ¬åœ°æœºå™¨ä¸ºNone
+# LPWSTR lpwszAdapterName, ç½‘ç»œé€‚é…å™¨åç§°
+# BOOL bNewIpAddress,      Trueè¡¨ç¤ºä¿®æ”¹IP
+# DWORD dwIpIndex,         è¡¨ç¤ºä¿®æ”¹ç¬¬å‡ ä¸ªIP, ä»0å¼€å§‹
+# DWORD dwIpAddress,       ä¿®æ”¹åçš„IPåœ°å€
+# DWORD dwSubNetMask,      ä¿®æ”¹åçš„å­ç æ©ç 
+# int nDhcpAction          å¯¹DHCPçš„æ“ä½œ, 0 - ä¸ä¿®æ”¹, 1 - å¯ç”¨, 2 - ç¦ç”¨
     DhcpNotifyConfigChange(None, \
                        NetId, \
                        True, \
@@ -99,11 +101,11 @@ def reDhcp():
                        inet_addr(ipAdd[0]), \
                        inet_addr(subMask[0]), \
                        0)
-    print u'¸üĞÂIP½áÊø'
+    print u'æ›´æ–°IPç»“æŸ'
 def renet(netname):
-    print isinstance(netname,unicode)#ÑéÖ¤ÊÇ·ñÊÇÄ¬ÈÏunicode±àÂëÄ£Ê½£¬ÒÔ´ËÎª»ù´¡²ÅÄÜ½øĞĞ×ª»»¡£
+    print isinstance(netname,unicode)#éªŒè¯æ˜¯å¦æ˜¯é»˜è®¤unicodeç¼–ç æ¨¡å¼ï¼Œä»¥æ­¤ä¸ºåŸºç¡€æ‰èƒ½è¿›è¡Œè½¬æ¢ã€‚
     command1='netsh interface set interface name="%s" admin="disabled"'%netname.encode('gb2312')
-    command2='netsh interface set interface name="%s" admin="enabled"'%netname.encode('gb2312')#´ËÃüÁî³É¹¦Ê¹ÓÃ£¬»ùÓÚ¸ü»»XPÏÂifmon.dllºÍnetsh.exeÎÄ¼ş£¬2003¿ÉÓÃ¡£www.dllexedown.com
+    command2='netsh interface set interface name="%s" admin="enabled"'%netname.encode('gb2312')#æ­¤å‘½ä»¤æˆåŠŸä½¿ç”¨ï¼ŒåŸºäºæ›´æ¢XPä¸‹ifmon.dllå’Œnetsh.exeæ–‡ä»¶ï¼Œ2003å¯ç”¨ã€‚www.dllexedown.com
     os.system(command1)
     print command1
     reDhcp()
@@ -116,24 +118,24 @@ def renet(netname):
 #NK=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,netkey)
 #DK=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,deskey)
 #NetId=''
-############½çÃæ
+############ç•Œé¢
 
 print(\
 u'''
 ###########################################
-            MAC¿ËÂ¡
-            Çë°´¼ü£º1¡¢¸ü»»mac,ip
-                   2¡¢»Ö¸´
-###########################################'''\
+            MACå…‹éš†
+            è¯·æŒ‰é”®ï¼š1ã€æ›´æ¢mac,ip
+                   2ã€æ¢å¤
+###########################################'''.encode('gbk')\
 )
-###########Ñ¡Ôñ/¸ü»»/»Ö¸´
+###########é€‰æ‹©/æ›´æ¢/æ¢å¤
 #show1=u
-#show2=u"ÇëÕıÈ·°´¼ü"
-rec=raw_input("Çë°´¼ü")
+#show2=u"è¯·æ­£ç¡®æŒ‰é”®"
+rec=raw_input(u"è¯·æŒ‰é”®".encode('gbk'))
 print rec
 #'''
 while (rec!=u'1' and rec!=u'2'):
-    rec=raw_input("ÇëÕıÈ·°´¼ü")
+    rec=raw_input(u"è¯·æ­£ç¡®æŒ‰é”®".encode('gbk'))
 
 #'''
 gate=['192.168.1.1']
@@ -148,33 +150,33 @@ elif rec=='2':
     MAC=""
 
 #'''
-########¹Ø±ÕÍøÂç,Ä¿Ç°Ã»ÓĞ×ö
+########å…³é—­ç½‘ç»œ,ç›®å‰æ²¡æœ‰åš
 ClassId=findKey(nes)
 if ClassId:
     DK=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,deskey+'\\'+ClassId,0,_winreg.KEY_ALL_ACCESS)
     print _winreg.QueryValueEx(DK,r"DriverDesc")[0]
-#4Ìí¼Ó¡¢ĞŞ¸Ä NetworkAddress ¼ü
+#4æ·»åŠ ã€ä¿®æ”¹ NetworkAddress é”®
     if MAC != "":
         _winreg.SetValueEx(DK,u"NetworkAddress",0,_winreg.REG_SZ,MAC)
-        print(u"ÉèÖÃMAC³É¹¦")
+        print(u"è®¾ç½®MACæˆåŠŸ")
         changeIP(NetId,ipAdd,subMask,gate,dnss)
-        print(u"ÉèÖÃip³É¹¦")
-#   _winreg.SetValue(DK,"NetworkAddresstt",1,"00112233eedd") #ÕâÊÇ½¨Á¢KEY£¬regÖĞµÄ¡®ÎÄ¼ş¼Ğ¡¯£¬²»ÊÇÎÒÒªµÄ¡£
+        print(u"è®¾ç½®ipæˆåŠŸ")
+#   _winreg.SetValue(DK,"NetworkAddresstt",1,"00112233eedd") #è¿™æ˜¯å»ºç«‹KEYï¼Œregä¸­çš„â€˜æ–‡ä»¶å¤¹â€™ï¼Œä¸æ˜¯æˆ‘è¦çš„ã€‚
     else:
-        _winreg.DeleteValue(DK,u"NetworkAddress")#É¾³ı¼üÖµ
+        _winreg.DeleteValue(DK,u"NetworkAddress")#åˆ é™¤é”®å€¼
                   
-        print(u'»Ö¸´MACÍê³É')
+        print(u'æ¢å¤MACå®Œæˆ')
         changeIP(NetId,ipAdd,subMask,gate,dnss)
-        print(u'»Ö¸´ipÍê³É')
+        print(u'æ¢å¤ipå®Œæˆ')
     _winreg.CloseKey(DK)
-    #ÏÔÊ¾µ±Ç°£¬¿ªÆôÁ¬½Ó¡£
+    #æ˜¾ç¤ºå½“å‰ï¼Œå¼€å¯è¿æ¥ã€‚
 else:
     print ClassId
 
 
 renet(nes)
 
-############################»ù±¾Íê³É#####################
+############################åŸºæœ¬å®Œæˆ#####################
 
 #'''
 print 'END'
