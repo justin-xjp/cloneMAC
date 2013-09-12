@@ -1,5 +1,5 @@
-# -*- coding: cp936 -*-
-#¶ÁÈ¡µ±Ç°IP¼°MACÊı¾İ¡£
+# -*- coding: utf-8 -*-
+#è¯»å–å½“å‰IPåŠMACæ•°æ®ã€‚
 from subprocess import *
 data=Popen(r"ipconfig /all",stdout=PIPE,shell=True)
 print data.stdout.read()
