@@ -81,7 +81,7 @@ def changeIP(subkey,ipAddress,subnetMask,gateway,dnsServer):
     _winreg.CloseKey(hkey)
 ########更新网络适配器,dll
 # 调用DhcpNotifyConfigChange函数通知IP被修改
-def reDhcp():
+def reDhcp():#这个应该没用
     
     DhcpNotifyConfigChange = windll.dhcpcsvc.DhcpNotifyConfigChange
 
@@ -108,7 +108,7 @@ def renet(netname):
     command2='netsh interface set interface name="%s" admin="enabled"'%netname.encode('gb2312')#此命令成功使用，基于更换XP下ifmon.dll和netsh.exe文件，2003可用。www.dllexedown.com
     os.system(command1)
     print command1
-    reDhcp()
+    #reDhcp()
     print command2
     os.system(command2)
 
