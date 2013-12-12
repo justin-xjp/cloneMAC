@@ -7,6 +7,7 @@ import _winreg
 import os
 import sys
 from ctypes import *
+from macwithfile import *#从文件选择mac
 #from codecs import *
 deskey=r"SYSTEM\CurrentControlSet\Control\class\{4D36E972-E325-11CE-BFC1-08002BE10318}"
 netkey=r"system\currentcontrolset\control\network\{4D36E972-E325-11CE-BFC1-08002BE10318}"
@@ -141,10 +142,14 @@ while (rec!=u'1' and rec!=u'2'):
 gate=['192.168.1.1']
 subMask=["255.255.255.0"]
 dnss=['8.8.8.8','8.8.4.4']
+'''
 if rec=='1':
     ipAdd=['192.168.1.3']
     MAC="00E04C317D8C"
     print ipAdd,MAC
+#'''
+if rec=='1':
+    ipAdd,MAC=seleMac(r".\SCmac.txt")
 elif rec=='2':
     ipAdd=['192.168.1.27']
     MAC=""
