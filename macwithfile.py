@@ -9,6 +9,10 @@ Ver:beta
 ip mac
 '''
 import os
+import re#正则表达式
+#构建正则过滤
+ipPattern=re.compile(r'^(.*)\n?$')#^开始.任意字符*重复0或多次\n?匹配0或一次$结尾匹配
+
 #os.system('cls')
 #读取文件，插入例子。
 #'''
@@ -26,7 +30,7 @@ def getline(handle, desired_line_number):
         return ''
     for current_line_number,line in enumerate(handle):
         if current_line_number == desired_line_number - 1 :
-            return line 
+                return ipPattern.search(line).groups()[0] 
     return ''#都不符合的时候
 
 #'''
@@ -64,10 +68,10 @@ def seleMac(filename):
         j+=1 
     #'''
     f.seek(0)
-    line=getline(f,int(sl))
-    ip=line[:-14]
-    mac=line[-13:]#总是记不住的字符串子串方式
-    #print('select %s%s'%(j,sl))
+    line=getline(f,int(sl))#读取文件有错误，当MAC列表最后一组被选取的时候，
+    ip=line[:-13] #由于行尾没有\n，IP选取会出问题。使用正则表达式在getline的时候将\n剔除。难怪我数ip的时候数字总是对不上。
+    mac=line[-12:]###总是记不住的字符串子串方式
+    #print('select %s'%sl)
     f.close()
     return [ip],mac
 
