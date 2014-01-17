@@ -10,8 +10,8 @@ ip mac
 '''
 import os
 import re#正则表达式
-#构建正则过滤
-ipPattern=re.compile(r'^(.*)\n?$')#^开始.任意字符*重复0或多次\n?匹配0或一次$结尾匹配
+#构建正则过滤/只用一次，不需要
+#ipPattern=re.compile(r'^(.*)\n?$')#^开始.任意字符*重复0或多次\n?匹配0或一次$结尾匹配
 
 #os.system('cls')
 #读取文件，插入例子。
@@ -30,7 +30,8 @@ def getline(handle, desired_line_number):
         return ''
     for current_line_number,line in enumerate(handle):
         if current_line_number == desired_line_number - 1 :
-                return ipPattern.search(line).groups()[0] 
+                #return ipPattern.search(line).groups()[0]
+                return re.search(r'^(.*)\n?$',line).group(1)        
     return ''#都不符合的时候
 
 #'''
@@ -77,4 +78,4 @@ def seleMac(filename):
 
 
 #测试
-#seleMac(r".\SCmac.txt")
+seleMac(r".\SCmac.txt")
